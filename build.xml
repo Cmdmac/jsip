@@ -107,7 +107,9 @@ c:/jakarta-ant/bin/ant all
             source="${javac.source}"
             target="${javac.target}"
             srcdir="${srcroot}"
-            destdir="${classes}" />
+            destdir="${classes}">
+            <compilerarg line="-encoding ISO8859-1" />
+        </javac>
     </presetdef>
 
 	<condition property="enableNIO" value="true">
@@ -116,7 +118,7 @@ c:/jakarta-ant/bin/ant all
 	
     <target name="all" depends="make,compileexamples,compiletools,javadoc,javadoc-jain" />
 
-    <target name="all-android" depends="make,compiletools,javadoc,javadoc-jain,android-copy,android-replace,android-jar-sip-stack" />
+    <target name="all-android" depends="make,compiletools,android-copy, android-replace, android-jar-sip-stack" /> <!-- android-copy,android-replace -->
 
     <target name="make" depends="compileapi,compileri,compilesdp,jain-sip-sdp-jar" />
 
@@ -272,7 +274,7 @@ c:/jakarta-ant/bin/ant all
                 </target>
                 <!-- Compile and build jars -->
                 <target name="compileri" depends="init,compileapi">
-                    <jain-javac includes="gov/nist/core/**/*.java, gov/nist/javax/sip/**/*.java"
+                    <jain-javac includes="gov/nist/core/**/*.java, gov/nist/javax/**/**/*.java"
                                 excludes="gov/nist/javax/sip/stack/sctp/**/*.java">
                         <classpath>
                             <pathelement location="${log4j_jar}" />
@@ -325,6 +327,7 @@ c:/jakarta-ant/bin/ant all
                 		  <pathelement location="${classes}" />
                 			<pathelement location="${log4j_jar}" />
                 		</classpath>
+                      <compilerarg line="-encoding ISO8859-1" />
                 	</javac>
                 	<jar destfile="${jain-sip-sctp-jar}" basedir="${classes}"  
                 	  includes="gov/nist/javax/sip/stack/sctp/**/*.class" />
@@ -898,8 +901,9 @@ c:/jakarta-ant/bin/ant all
 	</target>
 	
 	<target name="android-replace">
+
 		<echo>Modifying source for android</echo>
-		      <replace dir="src/android/" value="android.javax.sip">
+        <replace dir="src/android/" value="android.javax.sip">
             <replacetoken>javax.sip</replacetoken>
         </replace>
         <replace dir="src/android/" value="android.javax.sdp">
@@ -926,6 +930,7 @@ c:/jakarta-ant/bin/ant all
         <replace dir="src/android/javax/sip" value="&quot;javax.sip.address">
             <replacetoken>"android.javax.sip.address</replacetoken>
         </replace>
+
 	</target>
 
 	<target name="android-jar-sip-stack" depends="check_java_version"
@@ -939,9 +944,10 @@ c:/jakarta-ant/bin/ant all
 				<pathelement location="${classes}" />
 				<pathelement location="${log4j_jar}" />
 			</classpath>
+            <compilerarg line="-encoding ISO8859-1" />
 		</javac>
 		<jar destfile="dist/android/android-sip-stack.jar" basedir="${classes}"
-			includes="javax/**/*.class,android/**/*.class" />
+			includes="android/**/*.class" />
 	</target>
 
 	<target name="android-javadoc">

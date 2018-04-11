@@ -30,8 +30,8 @@
  */
 package gov.nist.javax.sip;
 
-import gov.nist.javax.sip.header.Via;
-import gov.nist.javax.sip.message.SIPResponse;
+//import gov.nist.javax.sip.header.Via;
+//import gov.nist.javax.sip.message.SIPResponse;
 
 import java.security.MessageDigest;
 import java.util.*;
@@ -202,13 +202,13 @@ public class Utils implements UtilsExt {
     		+ this.signature + "-" + Utils.toHexString(bid);
     	}
     }
-
-    public boolean responseBelongsToUs(SIPResponse response) {
-        Via topmostVia = response.getTopmostVia();
-        String branch = topmostVia.getBranch();
-        return branch != null && branch.startsWith(
-                   SIPConstants.BRANCH_MAGIC_COOKIE + "-" + this.signature);
-    }
+//
+//    public boolean responseBelongsToUs(SIPResponse response) {
+//        Via topmostVia = response.getTopmostVia();
+//        String branch = topmostVia.getBranch();
+//        return branch != null && branch.startsWith(
+//                   SIPConstants.BRANCH_MAGIC_COOKIE + "-" + this.signature);
+//    }
 
     public static String getSignature() {
         return signature;

@@ -25,9 +25,12 @@
 */
 package gov.nist.core;
 
-import gov.nist.javax.sip.*;
+//import gov.nist.javax.sip.*;
+
+//import android.gov.nist.javax.sip.Utils;
 
 import java.text.ParseException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -98,8 +101,13 @@ public class LexerCore extends StringTokenizer {
         lexerTables = new ConcurrentHashMap<String, ConcurrentHashMap<String, Integer>>();
     }
 
+    public static String toUpperCase(String str)
+    {
+        return str.toUpperCase(Locale.ENGLISH);
+    }
+
     protected void addKeyword(String name, int value) {
-        name = Utils.toUpperCase(name);
+        name = toUpperCase(name);
         // System.out.println("addKeyword " + name + " value = " + value);
         // new Exception().printStackTrace();
         Integer val = Integer.valueOf(value);
@@ -185,7 +193,7 @@ public class LexerCore extends StringTokenizer {
             if (startsId()) {
                 String id = ttoken();
                 tok.tokenValue = id;
-                String idUppercase = Utils.toUpperCase(id);
+                String idUppercase = toUpperCase(id);
                 if (currentLexer.containsKey(idUppercase)) {
                     Integer type = (Integer) currentLexer.get(idUppercase);
                     tok.tokenType = type.intValue();
@@ -240,7 +248,7 @@ public class LexerCore extends StringTokenizer {
                 this.currentMatch.tokenType = ID_NO_WHITESPACE;
             } else {
                 String nexttok = getNextId();
-                Integer cur = currentLexer.get(Utils.toUpperCase(nexttok));
+                Integer cur = currentLexer.get(toUpperCase(nexttok));
 
                 if (cur == null || cur.intValue() != tok)
                     throw new ParseException(
